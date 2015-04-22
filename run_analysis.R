@@ -3,12 +3,7 @@
 ## Purpose:  Demonstrate basic skills in data cleaning
 ## Author: Scott Trimber
 ## Date: 4/21/15
-##
-##
-##
-##
-##
-##
+
 ## 1) Check to see if the proper packages are installed and available for data cleanup
 
 print("checking to see if required library (dplyr) is installed....")
@@ -23,14 +18,12 @@ print("checking to see if required library (dplyr) is installed....")
 
 ## 2) check that the data files exist
 print("Checking to see data files exist...")
-   requiredFiles <- c("subject_train.txt",
-                      "subject_test.txt",
-                      "X_train.txt",
-                      "X_test.txt",
-                      "y_train.txt",
-                      "y_text.txt",
-                      "features.txt",
-                      "activity_labels.txt")
+existingFiles <- list.files()
+requiredFiles <- c("subject_train.txt","subject_test.txt","X_train.txt","y_train.txt","X_test.txt","y_test.txt","features.txt","activity_labels.txt")
+missingFiles <- setdiff(requiredFiles,existingFiles)
+if(length(missingFiles)>0){
+  stop("Processing stopped, missing ",missingFiles, " required files.")
+}
 
 ## 3) load the data files into seperate objects for maniuplation
 print ("Loading the data files for cleaning...")
@@ -67,19 +60,17 @@ joined <- rbind(joinedTrain,joinedTest)
 
 
 ## 5) retain only the standard deviation and mean columns from the combined dataset
+
 print("Filtering columns in data set...")
 keepCols <- grep("mean\\(\\)|std\\(\\)|subjectId|activity",names(joined))
 joined <- joined[,keepCols]
 
 ## 6) relable the activity names to more descriptive terms
+
 print("Relabeling activity names...")
 joined$activity <- as.factor(joined$activity)
-levels(joined$activity) <- c(  "WALKING",
-                               "WALKING_UPSTAIRS",
-                               "WALKING_DOWNSTAIRS",
-                               "SITTING",
-                               "STANDING",
-                               "LAYING")
+levels(joined$activity) <- activityLabels$V2
+
 
 ## 7) write out the new 'tidy' data set as a text file with row.names = FALSE
 print("Summarizing the data and writing out new tidy data set as 'tidy.txt'...")
