@@ -15,7 +15,8 @@ This assignment will perform the following operations on the UCI HAR Dataset
 
  2) check that the data files exist in the current working directory.
     PLEASE NOTE.  This script will not look down the directory structure the way it is
-	unzipped from the original zip file.  
+	unzipped from the original zip file.  You need to copy the following files into 
+	the current working directory (flatten out the directory hierarchy).
 	"subject_train.txt",
     "subject_test.txt",
     "X_train.txt",
@@ -33,8 +34,8 @@ This assignment will perform the following operations on the UCI HAR Dataset
 
  5) Filter the dataset and retain only the standard deviation and mean columns from the combined dataset and add a variable for subjectId and activity.
 
-
  6) relabel the activity names to more descriptive terms from their original "int" values.
 
-
- 7) write out the new 'tidy' dataset in the current working directory as a text file (tidy.txt) with row.names = FALSE
+ 7) Create a "tidy" dataset with the averages for the values grouped by the subject ID and the activity.
+ 
+ 8) write out the new 'tidy' dataset in the current working directory as a text file (tidy.txt) with row.names = FALSE
