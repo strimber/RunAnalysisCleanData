@@ -18,11 +18,13 @@ print("checking to see if required library (dplyr) is installed....")
 
 ## 2) check that the data files exist
 print("Checking to see data files exist...")
+currDir <- getwd()
+
 existingFiles <- list.files()
 requiredFiles <- c("subject_train.txt","subject_test.txt","X_train.txt","y_train.txt","X_test.txt","y_test.txt","features.txt","activity_labels.txt")
 missingFiles <- setdiff(requiredFiles,existingFiles)
 if(length(missingFiles)>0){
-  stop("Processing stopped, missing ",missingFiles, " required files.")
+  stop("Processing stopped, missing ",missingFiles, " required files in the current working directory.")
 }
 
 ## 3) load the data files into seperate objects for maniuplation
@@ -73,7 +75,7 @@ levels(joined$activity) <- activityLabels$V2
 
 
 ## 7) write out the new 'tidy' data set as a text file with row.names = FALSE
-print("Summarizing the data and writing out new tidy data set as 'tidy.txt'...")
+print("Summarizing the data and writing out new tidy data set (CSV formatted) as 'tidy.txt'..list.")
 
 tidy <- joined %>% group_by(subjectId,activity) %>% summarise_each(funs(mean))
 write.csv(tidy, "tidy.txt", row.names=FALSE)
